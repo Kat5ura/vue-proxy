@@ -1,5 +1,6 @@
 import Options from './options.vue'
 import OptionsOther from './options-other.vue'
+import Responder from './responder.vue'
 
 const routes = [
   {
@@ -9,8 +10,8 @@ const routes = [
     items: [
       {
         index: '1-1',
-        name: '选项1',
-        component: Options
+        name: 'Responder',
+        component: Responder
       },
 
       {

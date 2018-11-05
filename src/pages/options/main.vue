@@ -43,9 +43,17 @@
     name: "options-main",
 
     data() {
+      let defaultView = null;
+      let firstRoutes = routes[0];
+      if(firstRoutes.component) {
+        defaultView = firstRoutes.component
+      } else {
+        defaultView = firstRoutes.items[0].component
+      }
+
       return {
         routes: routes,
-        currentView: null
+        currentView: defaultView || null
       }
     },
 
