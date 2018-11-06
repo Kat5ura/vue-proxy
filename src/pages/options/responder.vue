@@ -4,6 +4,12 @@
       <el-header style="position: relative;">
         <h3 style="display: inline-block;">规则 Rules</h3>
         <div style="position: absolute;right: 0;display: inline-block;">
+          <el-switch v-model="enable" @change="updateStatus"
+                     active-color="#13ce66"
+                     inactive-color="#ff4949"
+                     active-text="启用"
+                     style="margin-right: 10px;"
+                     inactive-text="停用"></el-switch>
           <el-button icon="el-icon-plus" @click="addRule">新建规则</el-button>
           <el-button type="danger" icon="el-icon-delete" @click="clearRules">清空规则</el-button>
         </div>
@@ -41,7 +47,7 @@
           >
             <template slot-scope="scope">
               <el-button @click="editRule(scope.row)" type="text" size="small">编辑</el-button>
-              <el-button type="danger" icon="el-icon-delete" circle @click="delRule(scope.row)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle @click="delRule(scope.$index)"></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -107,17 +113,26 @@
 </template>
 
 <script>
+  import util from '../../utils/util'
+
+  const RESPONDER_ENABLE = 'responder.enable'
+  const RESPONDER_FILE_RULES = 'responder.file_rules'
+
   export default {
     name: "responder",
 
     mounted() {
-      this.updateRules();
+      this.refreshRules();
+      this.refreshStatus();
     },
 
     data() {
       return {
         addRuleDialogVisible: false,
         responseDialogVisible: false,
+
+        enable: false,
+
         rules: [],
 
         ruleForm: {
@@ -134,17 +149,28 @@
 
     methods: {
 
-      updateRules() {
-        chrome.storage.sync.get(['responder.file_rules'], (result) => {
-          console.log('Rules currently is ', result['responder.file_rules']);
+      refreshStatus() {
+        util.getData([RESPONDER_ENABLE], (result) => {
+          console.log('Status currently is ', result[RESPONDER_ENABLE])
+          this.enable = result['responder.file_rules'] || false
+        });
+      },
+
+      updateStatus() {
+        util.setData(RESPONDER_ENABLE, this.enable, () => {
+          console.log('Responder currently is ', this.enable ? 'enabled' : 'disabled');
+        });
+      },
+
+      refreshRules() {
+        util.getData([RESPONDER_FILE_RULES], (result) => {
+          console.log('Rules currently is ', result[RESPONDER_FILE_RULES])
           this.rules = result['responder.file_rules'] || []
         });
       },
 
-      setRules(key, rules, cb) {
-        chrome.storage.sync.set({
-          [key]: rules
-        }, () => {
+      setRules(rules, cb) {
+        util.setData(RESPONDER_FILE_RULES, rules, () => {
           console.log('Rules currently is ', rules);
           cb && cb();
         });
@@ -160,22 +186,21 @@
         this.addRuleDialogVisible = true
       },
 
-      delRule(row) {
-
+      delRule(index) {
+        this.rules.splice(index, 1);
+        this.ruleItemChange();
       },
 
       ruleItemChange() {
-        this.setRules('responder.file_rules', this.rules, ()=> {
-          this.updateRules();
+        this.setRules( this.rules, ()=> {
+          this.refreshRules();
         })
       },
 
       clearRules() {
-        chrome.storage.sync.set({
-          'responder.file_rules': []
-        }, () => {
+        util.clearData(RESPONDER_FILE_RULES, () => {
           console.log('Rule clear!!!');
-          this.updateRules();
+          this.refreshRules();
         });
       },
 
@@ -196,8 +221,8 @@
       onSubmit() {
         let data = Object.assign({_id: Date.now()}, this.ruleForm)
         let rules = [data].concat(this.rules)
-        this.setRules('responder.file_rules', rules, ()=> {
-          this.updateRules();
+        this.setRules(rules, ()=> {
+          this.refreshRules();
           this.addRuleDialogVisible = false;
         })
       },
