@@ -70,8 +70,17 @@
         <el-form-item label="即时生效">
           <el-switch v-model="ruleForm.enabled"></el-switch>
         </el-form-item>
-
-        <el-form-item label="代理文件" v-if="mode === 'new'">
+        <el-form-item label="状态码">
+          <el-select v-model="ruleForm.code" placeholder="请选择">
+            <el-option
+              v-for="item in codeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="代理文件" v-if="mode === 'new' && ruleForm.code === 200">
           <el-upload
             class="upload-demo"
             drag
@@ -91,8 +100,11 @@
             <el-button type="danger" icon="el-icon-delete" circle @click="deleteFile"></el-button>
           </template>
         </el-form-item>
-        <el-form-item label="代理文件" v-if="mode === 'edit'">
+        <el-form-item label="代理文件" v-if="mode === 'edit' && ruleForm.code === 200">
           <el-input type="textarea" v-model="ruleForm.response"></el-input>
+        </el-form-item>
+        <el-form-item label="重定向" v-if="ruleForm.code === 302">
+          <el-input v-model="ruleForm.redirect"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -133,12 +145,45 @@
 
         enable: false,
 
+        codeOptions: [
+          {
+            value: 200,
+            label: '200 --成功'
+          }, {
+            value: 204,
+            label: '204 --空'
+          }, {
+            value: 302,
+            label: '302 --重定向'
+          }, {
+            value: 304,
+            label: '304 --未改变'
+          }, {
+            value: 401,
+            label: '401 --需要验证'
+          }, {
+            value: 403,
+            label: '403 --决绝访问'
+          }, {
+            value: 404,
+            label: '404 --未找到'
+          }, {
+            value: 500,
+            label: '500 --服务器错误'
+          }, {
+            value: 502,
+            label: '502 --无法触达'
+          }
+        ],
+
         rules: [],
 
         ruleForm: {
           name: '',
           rule: '',
           enabled: true,
+          code: 200,
+          redirect: '',
           response: '',
           desc: ''
         },
