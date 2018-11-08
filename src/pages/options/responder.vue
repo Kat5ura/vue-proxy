@@ -128,7 +128,7 @@
   import util from '../../utils/util'
 
   const RESPONDER_ENABLE = 'responder.enable'
-  const RESPONDER_FILE_RULES = 'responder.file_rules'
+  const RESPONDER_RULES = 'responder.rules'
 
   export default {
     name: "responder",
@@ -197,7 +197,7 @@
       refreshStatus() {
         util.getData([RESPONDER_ENABLE], (result) => {
           console.log('Status currently is ', result[RESPONDER_ENABLE])
-          this.enable = result['responder.file_rules'] || false
+          this.enable = result[RESPONDER_ENABLE] || false
         });
       },
 
@@ -208,14 +208,14 @@
       },
 
       refreshRules() {
-        util.getData([RESPONDER_FILE_RULES], (result) => {
-          console.log('Rules currently is ', result[RESPONDER_FILE_RULES])
-          this.rules = result['responder.file_rules'] || []
+        util.getData([RESPONDER_RULES], (result) => {
+          console.log('Rules currently is ', result[RESPONDER_RULES])
+          this.rules = result[RESPONDER_RULES] || []
         });
       },
 
       setRules(rules, cb) {
-        util.setData(RESPONDER_FILE_RULES, rules, () => {
+        util.setData(RESPONDER_RULES, rules, () => {
           console.log('Rules currently is ', rules);
           cb && cb();
         });
@@ -243,7 +243,7 @@
       },
 
       clearRules() {
-        util.clearData(RESPONDER_FILE_RULES, () => {
+        util.clearData(RESPONDER_RULES, () => {
           console.log('Rule clear!!!');
           this.refreshRules();
         });
