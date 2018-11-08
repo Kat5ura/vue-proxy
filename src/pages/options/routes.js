@@ -1,6 +1,7 @@
 import Options from './options.vue'
 import OptionsOther from './options-other.vue'
 import Responder from './responder.vue'
+import Host from './host.vue'
 
 const routes = [
   {
@@ -13,24 +14,11 @@ const routes = [
         name: 'Responder',
         component: Responder
       },
-
       {
-        group: true,
-        name: '分组1',
-        items: [
-          {
-            index: '1-2',
-            name: '选项2',
-            component: Options
-          },
-          {
-            index: '1-3',
-            name: '选项3',
-            component: Options
-          },
-        ]
+        index: '1-2',
+        name: 'Hosts',
+        component: Host
       },
-
       {
         group: true,
         name: '分组2',
