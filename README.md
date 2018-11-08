@@ -10,7 +10,7 @@
 
 
 ## Installation
-1. Clone the repository `git clone https://github.com/EmailThis/extension-boilerplate.git`
+1. Clone the repository `git clone https://github.com/Kat5ura/vue-proxy.git`
 2. Run `npm install`
 3. Run `npm run build`
 
