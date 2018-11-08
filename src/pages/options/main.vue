@@ -7,7 +7,7 @@
 
       <el-container>
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-          <el-menu :default-openeds="['1']">
+          <el-menu :default-openeds="['1']" :default-active="'1-1'">
             <el-submenu :index="item.index" v-for="(item, index) in routes" v-if="item.items && item.items.length">
               <template slot="title"><i :class="'el-icon-' + item.icon" v-if="item.icon"></i>{{item.name}}</template>
               <template v-for="sub in item.items">
