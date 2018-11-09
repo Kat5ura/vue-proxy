@@ -125,7 +125,7 @@
 </template>
 
 <script>
-  import util from '../../utils/util'
+  import util from '../../../utils/util'
 
   const RESPONDER_ENABLE = 'responder.enable'
   const RESPONDER_RULES = 'responder.rules'

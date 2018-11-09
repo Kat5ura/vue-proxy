@@ -4,7 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import VueHighlightJS from 'vue-highlightjs'
 
-import Options from './options/main.vue'
+import Options from './options/index.vue'
 
 Vue.use(ElementUI);
 Vue.use(VueHighlightJS);

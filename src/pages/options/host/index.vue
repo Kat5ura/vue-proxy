@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import util from '../../utils/util'
+  import util from '../../../utils/util'
 
   const HOSTS_ENABLE = 'hosts.enable'
   const HOSTS_RULES = 'hosts.rules'

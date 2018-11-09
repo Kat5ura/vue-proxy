@@ -1,7 +1,7 @@
 import Options from './options.vue'
 import OptionsOther from './options-other.vue'
-import Responder from './responder.vue'
-import Host from './host.vue'
+import Responder from './responder/index.vue'
+import Host from './host/index.vue'
 
 const routes = [
   {
