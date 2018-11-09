@@ -2,6 +2,7 @@ import Options from './options.vue'
 import OptionsOther from './options-other.vue'
 import Responder from './responder/index.vue'
 import Host from './host/index.vue'
+import Willow from './willow/index.vue'
 
 const routes = [
   {
@@ -20,22 +21,10 @@ const routes = [
         component: Host
       },
       {
-        group: true,
-        name: '分组2',
-        items: [
-          {
-            index: '1-4',
-            name: '选项4',
-            component: Options
-          },
-          {
-            index: '1-5',
-            name: '选项5',
-            component: Options
-          },
-        ]
+        index: '1-3',
+        name: 'Willow',
+        component: Willow
       }
-
     ],
   },
   {
