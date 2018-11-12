@@ -6,7 +6,7 @@ export default {
       [key]: value
     }, () => {
       console.log( key + ' currently is ', value);
-      cb && cb();
+      cb && cb()
     });
   },
 
@@ -17,7 +17,18 @@ export default {
   },
 
   clearData(key, cb) {
-    this.setData(key, null);
-    cb && cb();
+    this.setData(key, null)
+    cb && cb()
+  },
+
+  getItemIndex(arr, key, value) {
+    let index = -1
+    arr.forEach((item, i) => {
+      if(item[key] === value) {
+        index = i
+      }
+    })
+
+    return index
   }
 }

@@ -1,15 +1,16 @@
 <template>
-  <div class="collapse-comp">
+  <div class="collapse-comp" style="border-top: 2px solid #e4e7ed;">
     <el-container>
-      <el-header>
-        <h4 style="display: inline-block;">{{title}}</h4>
-        <div style="position: absolute;right: 0;display: inline-block;">
+      <el-header height="45px">
+        <h3 style="display: inline-block;">{{title}}</h3>
+        <div style="position: absolute;right: 100px;display: inline-block;">
           <slot name="operation"></slot>
+          <el-button type="text" :icon="icon" @click="slide"></el-button>
         </div>
-        <el-button type="text" icon="el-icon-arrow-down" @click="slide"></el-button>
+
       </el-header>
       <el-collapse-transition>
-        <el-main v-show="!collapse">
+        <el-main v-show="!collapse" style="border-top:1px solid #e6e4ff;padding-top: 0;">
           <slot></slot>
         </el-main>
       </el-collapse-transition>
